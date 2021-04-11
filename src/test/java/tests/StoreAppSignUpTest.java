@@ -13,6 +13,8 @@ import utilities.TestBase;
 
 public class StoreAppSignUpTest extends TestBase {
 
+    String email;
+    String password;
 
     @DataProvider (name = "signUpTestData")
     public static Object [][] testData () {
@@ -23,7 +25,7 @@ public class StoreAppSignUpTest extends TestBase {
         };
     }
 
-    @Test (dataProvider = "signUpTestData")
+    @Test (dataProvider = "signUpTestData", priority = 1)
     public void signUpTest (String firstName, String lastName, String password, String day, String month,
                             String year, String address, String city, String state, String postcode, String mobileNumber) {
 
@@ -33,10 +35,12 @@ public class StoreAppSignUpTest extends TestBase {
 
         driver.get(Configuration.getProperty("StoreURL"));
         storeAppHomePage.signInButton.click();
-        storeAppSignInPage.emailInputBox.sendKeys(DataUtils.getRandomEmail());
+        email = DataUtils.getRandomEmail();
+        storeAppSignInPage.emailInputBox.sendKeys(email);
         storeAppSignInPage.createAccountButton.click();
         storeAppRegisterPage.firstName.sendKeys(firstName);
         storeAppRegisterPage.lastName.sendKeys(lastName);
+        this.password = password;
         storeAppRegisterPage.password.sendKeys(password);
         BrowserUtils.selectDropdownByValue(storeAppRegisterPage.days, day);
         BrowserUtils.selectDropdownByValue(storeAppRegisterPage.months, month);
@@ -52,5 +56,20 @@ public class StoreAppSignUpTest extends TestBase {
         Assert.assertEquals(actualTitle, expectedTitle, "Actual title " + actualTitle +
                            " didn't match with expected title" + expectedTitle);
 
+    }
+
+    @Test (priority = 2)
+    public void signInTest () {
+        driver.get(Configuration.getProperty("StoreURL"));
+        StoreAppHomePage storeAppHomePage = new StoreAppHomePage();
+        storeAppHomePage.signInButton.click();
+        StoreAppSignInPage storeAppSignInPage = new StoreAppSignInPage();
+        storeAppSignInPage.emailSignIn.sendKeys(email);
+        storeAppSignInPage.passwordSignIn.sendKeys(password);
+        storeAppSignInPage.signInButton.click();
+        String expectedTitle = "My account - My Store";
+        String actualTitle = driver.getTitle();
+        Assert.assertEquals(actualTitle, expectedTitle, "Actual title " + actualTitle +
+                " didn't match with expected title" + expectedTitle);
     }
 }

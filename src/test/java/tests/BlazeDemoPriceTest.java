@@ -12,12 +12,12 @@ import java.util.List;
 
 public class BlazeDemoPriceTest extends TestBase {
 
-    BlazeDemoHomepage blazeDemoHomepage = new BlazeDemoHomepage();
-    BlazeDemoFlightsPage blazeDemoFlightsPage = new BlazeDemoFlightsPage();
-
 
     @Test
-    public void priceTest () throws InterruptedException {
+    public void priceTest () {
+        BlazeDemoHomepage blazeDemoHomepage = new BlazeDemoHomepage();
+        BlazeDemoFlightsPage blazeDemoFlightsPage = new BlazeDemoFlightsPage();
+
         driver.get(Configuration.getProperty("BlazeDemoURL"));
         blazeDemoHomepage.findFlightsButton.click();
        // List <WebElement> prices = driver.findElements(By.xpath("//table[@class='table']//td[6]"));
@@ -38,6 +38,7 @@ public class BlazeDemoPriceTest extends TestBase {
     Test1 : Verify that test result  having only two "Virgin America" flights
     Test2 : Verify that flight text having right city names like (Flights from San Diego to New York)
      */
+
 
     @Test
     public void flightTest1 () {
