@@ -9,12 +9,11 @@ import utilities.TestBase;
 
 import java.util.concurrent.TimeUnit;
 
-public class BlazeDemoTest extends TestBase { //
+public class BlazeDemoTest extends TestBase {
 
-    BlazeDemoHomepage blazeDemoHomepage = new BlazeDemoHomepage();
-
-    @Test
+    @Test (groups = {"regression"})
     public void test () {
+        BlazeDemoHomepage blazeDemoHomepage = new BlazeDemoHomepage();
         driver.get(Configuration.getProperty("BlazeDemoURL"));
         //driver.findElement(By.xpath("//input[@type='submit']")).click();
         blazeDemoHomepage.findFlightsButton.click();
