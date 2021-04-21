@@ -1,13 +1,14 @@
 package utilities;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 public class BrowserUtils {
@@ -48,5 +49,14 @@ public class BrowserUtils {
         WebDriver driver = Driver.getDriver();
         JavascriptExecutor js = ((JavascriptExecutor)driver);
         js.executeScript("window.scrollBy(0," + pixels + ")");
+    }
+
+    //This method takes screenshot.
+    public static void takeScreenshot (String testName) throws IOException {
+        WebDriver driver = Driver.getDriver();
+        File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        String path = "src/test/resources/screenshots/" + testName + ".png";
+        File file = new File(path);
+        FileUtils.copyFile(screenshot, file);
     }
 }
